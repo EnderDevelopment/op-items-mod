@@ -1,0 +1,50 @@
+plugins {
+    id 'fabric-loom' version '1.6-SNAPSHOT'
+    id 'maven-publish'
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'Fabric'
+        url = 'https://maven.fabricmc.net/'
+    }
+}
+
+extensions {
+    loom {
+        minecraftVersion = '1.21.4'
+        mappingsVersion = '1.21.4+build.1'
+        modId = 'opitemsmod'
+        version = '1.0.0'
+        namespace = 'com.aryamehta227.opitemsmod'
+        accessWidener = 'src/main/resources/opitemsmod.accesswidener'
+    }
+}
+
+dependencies {
+    minecraft 'com.mojang:minecraft:1.21.4'
+    mappings 'net.fabricmc:yarn:1.21.4+build.1:v2'
+    modImplementation 'net.fabricmc:fabric-loader:0.14.0'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.91.0+1.21.4'
+}
+
+processResources {
+    inputs.property 'version', project.version
+    inputs.property 'minecraft_version', loom.minecraftVersion
+    from(sourceSets.main.resources.srcDirs) {
+        include 'fabric.mod.json'
+        expand 'fabric.mod.json': 'fabric.mod.json' {
+            it as TreeMap
+            it.put('version', project.version)
+            it.put('minecraft', [
+                loom.minecraftVersion: [
+                    'version': loom.minecraftVersion,
+                    'ordering': 'required'
+                ]
+            ])
+            new JsonBuilder().toJson(it)
+        }
+    }
+    into "${buildDir}/resources/main"
+}

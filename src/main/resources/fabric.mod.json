@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "opitemsmod",
+  "version": "1.0.0",
+  "name": "OpItemsMod",
+  "description": "A Minecraft mod that adds OP Items",
+  "authors": [
+    "Arya Mehta"
+  ],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.aryamehta227.opitemsmod.OpItemsMod"
+    ]
+  },
+  "minecraft": {
+    "*": {
+      "version": "1.21.4",
+      "ordering": "required"
+    }
+  },
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "fabric-api": "*"
+  }
+}
